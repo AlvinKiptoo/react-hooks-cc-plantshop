@@ -1,7 +1,7 @@
 import React from "react";
 import PlantCard from "./PlantCard";
 
-function PlantList({ plants, setPlants, onDelete }) {
+function PlantList({ plants, onDelete, setPlants }) {
   
   const handleUpdate = (updatedPlant) => {
     setPlants((prevPlants) =>
@@ -10,16 +10,12 @@ function PlantList({ plants, setPlants, onDelete }) {
       )
     );
   };
+  
 
   return (
     <ul className="cards">
       {plants.map((plant) => (
-        <PlantCard
-          key={plant.id}
-          plant={plant}
-          onUpdate={handleUpdate}
-          onDelete={onDelete}
-        />
+        <PlantCard key={plant.id} plant={plant} onUpdate={handleUpdate} onDelete={onDelete} />
       ))}
     </ul>
   );

@@ -5,9 +5,9 @@ function PlantCard({ plant, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newPrice, setNewPrice] = useState(price);
 
-
+  
   const handlePriceUpdate = () => {
-    fetch(`http://localhost:6001/plants/${id}`, {
+    fetch(`http://localhost:3001/plants/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -16,21 +16,18 @@ function PlantCard({ plant, onUpdate, onDelete }) {
     })
       .then((response) => response.json())
       .then((updatedPlant) => {
-        onUpdate(updatedPlant);
+        onUpdate(updatedPlant); 
         setIsEditing(false); 
       });
   };
 
-  
-  const toggleStockStatus = () => {
-    const updatedStockStatus = { inStock: !inStock };
-
+  const handleToggleStock = () => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedStockStatus),
+      body: JSON.stringify({ inStock: !inStock }),
     })
       .then((response) => response.json())
       .then((updatedPlant) => {
@@ -43,7 +40,6 @@ function PlantCard({ plant, onUpdate, onDelete }) {
       <img src={image} alt={name} />
       <h4>{name}</h4>
 
-      
       {isEditing ? (
         <input
           type="number"
@@ -51,7 +47,7 @@ function PlantCard({ plant, onUpdate, onDelete }) {
           onChange={(e) => setNewPrice(e.target.value)}
         />
       ) : (
-        <p>Price: ${price}</p>
+        <p>Price: {price}</p>
       )}
 
       {isEditing ? (
@@ -60,17 +56,16 @@ function PlantCard({ plant, onUpdate, onDelete }) {
         <button onClick={() => setIsEditing(true)}>Edit Price</button>
       )}
 
-      
       <button
-        className={inStock ? "primary" : ""}
-        onClick={toggleStockStatus}
+       className={inStock ? "primary" : ""}
+       onClick={handleToggleStock}
       >
         {inStock ? "In Stock" : "Out of Stock"}
       </button>
-
       <button onClick={() => onDelete(id)}>Delete</button>
     </li>
   );
 }
 
 export default PlantCard;
+

@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 
-function Search({ plants, setPlants }) {
-  const [searchTerm, setSearchTerm] = useState("");
-
+function Search({ searchTerm, setSearchTerm }) {
   const handleSearch = (e) => {
-    const searchQuery = e.target.value;
-    setSearchTerm(searchQuery);
+    setSearchTerm(e.target.value);
+  };
 
-    const filteredPlants = plants.filter((plant) =>
-      plant.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setPlants(filteredPlants);
-  }
+
   return (
     <div className="searchbar">
       <label htmlFor="search">Search Plants:</label>
@@ -19,8 +13,8 @@ function Search({ plants, setPlants }) {
         type="text"
         id="search"
         value={searchTerm}
+        onChange={handleSearch} 
         placeholder="Type a name to search..."
-        onChange={handleSearch}
       />
     </div>
   );
